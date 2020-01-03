@@ -8,7 +8,6 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.0"
     defaultConfig {
-        applicationId "com.hyeyeon.simplespinnerview"
         minSdkVersion 21
         targetSdkVersion 29
     }
