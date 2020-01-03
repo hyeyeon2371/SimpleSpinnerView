@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="ssv_default_text_size">13sp</dimen>
+    <dimen name="ssv_default_item_height">40dp</dimen>
+    <dimen name="ssv_default_margin">15dp</dimen>
+</resources>

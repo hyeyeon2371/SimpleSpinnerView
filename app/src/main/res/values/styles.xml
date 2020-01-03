@@ -1,0 +1,5 @@
+<resources>
+    <style name="SimpleSpinnerView" parent="android:Widget.Holo.Light.ListPopupWindow">
+        <item name="android:popupBackground">@drawable/ssv_list_bg</item>
+    </style>
+</resources>

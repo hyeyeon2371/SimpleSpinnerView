@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ssvDefaultTextColor">#111111</color>
+    <color name="ssvDefaultItemBg">#ffffff</color>
+    <color name="ssvDisabledTextColor">#aaaaaa</color>
+    <color name="ssvDisabledBg1">#f9f9fa</color>
+    <color name="ssvDisabledBg2">#eeeeee</color>
+</resources>

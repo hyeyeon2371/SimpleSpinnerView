@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SimpleSpinnerView" parent="android.widget.LinearLayout">
+        <attr name="placeHolder" format="reference|string"/>
+        <attr name="placeHolderColor" format="reference|color"/>
+
+        <attr name="textColor" format="reference|color"/>
+        <attr name="textSize" format="reference|dimension"/>
+
+        <attr name="visibleCount" format="reference|integer"/>
+        <attr name="isDisabled" format="reference|boolean"/>
+    </declare-styleable>
+</resources>

@@ -1,0 +1,27 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.0"
+    defaultConfig {
+        applicationId "com.hyeyeon.simplespinnerview"
+        minSdkVersion 21
+        targetSdkVersion 29
+    }
+    dataBinding {
+        enabled=true
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.core:core-ktx:1.1.0'
+}
+apply plugin: 'com.github.dcendents.android-maven'
+group='com.github.hyeyeon2371'

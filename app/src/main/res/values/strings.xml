@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">SpinnerView</string>
+    <string name="ssv_default_placeholder">select</string>
+</resources>
