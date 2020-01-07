@@ -46,7 +46,9 @@ dependencies {
 val list : MutableList<Any> = mutableListOf("1","2", .. ,"7","8","9")
 mSimpleSpinnerView.setItems(list)
 mSimpleSpinnerView.setOnItemClickTask { position -> /* event */ }
+
 or 
+
 mSimpleSpinnerView.setAdapter(object : BaseAdapter(){..})
 ```
 
