@@ -1,5 +1,5 @@
 # Android SimpleSpinnerView
-<img src ="https://img.shields.io/badge/version-0.0.1-brightgreen.svg"/> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<img src ="https://img.shields.io/badge/version-0.0.2-brightgreen.svg"/> [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 ## Gradle
 ``` gradle
