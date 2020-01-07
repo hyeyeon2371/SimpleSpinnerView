@@ -1,4 +1,4 @@
-package com.hyeyeon.simplespinnerview
+package com.github.hyeyeon2371
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -17,7 +17,7 @@ import android.widget.ListPopupWindow
 import androidx.databinding.DataBindingUtil
 
 class SimpleSpinnerView : LinearLayout {
-    private lateinit var mBinding: com.hyeyeon.simplespinnerview.databinding.LayoutSimplespinnerviewBinding
+    private lateinit var mBinding: com.github.hyeyeon2371.databinding.LayoutSimplespinnerviewBinding
     private lateinit var mPopup: ListPopupWindow
     private lateinit var mAdapter: CustomSpinnerAdapter
     private var mList = mutableListOf<Any>()
@@ -175,7 +175,7 @@ class SimpleSpinnerView : LinearLayout {
         (dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
 
     inner class CustomSpinnerAdapter(val list: MutableList<String>) : BaseAdapter() {
-        private lateinit var mBinding: com.hyeyeon.simplespinnerview.databinding.ItemSimplespinnerviewBinding
+        private lateinit var mBinding: com.github.hyeyeon2371.databinding.ItemSimplespinnerviewBinding
 
         @SuppressLint("ViewHolder")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
