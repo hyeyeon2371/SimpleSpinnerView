@@ -17,6 +17,7 @@ import android.widget.LinearLayout
 import android.widget.ListAdapter
 import android.widget.ListPopupWindow
 import androidx.databinding.DataBindingUtil
+import java.lang.RuntimeException
 
 class SimpleSpinnerView : LinearLayout {
     private lateinit var mBinding: com.github.hyeyeon2371.databinding.LayoutSimplespinnerviewBinding
@@ -156,15 +157,22 @@ class SimpleSpinnerView : LinearLayout {
     }
 
     fun expand() {
-        mBinding.imageviewCustomspinnerArrow.animate().rotation(180f).start()
-        mPopup.show()
-        mPopup.listView?.overScrollMode = View.OVER_SCROLL_NEVER
-        mPopup.listView?.isVerticalScrollBarEnabled = false
+        try {
+            mPopup.show()
+            mBinding.imageviewCustomspinnerArrow.animate().rotation(180f).start()
+            mPopup.listView?.overScrollMode = View.OVER_SCROLL_NEVER
+            mPopup.listView?.isVerticalScrollBarEnabled = false
+        } catch (e: RuntimeException) {
+            if (mPopup.isShowing)
+                mPopup.dismiss()
+        }
     }
 
     fun collapse() {
-        mBinding.imageviewCustomspinnerArrow.animate().rotation(0f).start()
-        mPopup.dismiss()
+        if(mPopup.isShowing){
+            mBinding.imageviewCustomspinnerArrow.animate().rotation(0f).start()
+            mPopup.dismiss()
+        }
     }
 
     private fun convertDpToPx(dp: Int) =
