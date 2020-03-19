@@ -3,6 +3,7 @@ package com.github.hyeyeon2371
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
+import android.database.DataSetObserver
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.util.AttributeSet
@@ -13,14 +14,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.LinearLayout
+import android.widget.ListAdapter
 import android.widget.ListPopupWindow
 import androidx.databinding.DataBindingUtil
 
 class SimpleSpinnerView : LinearLayout {
     private lateinit var mBinding: com.github.hyeyeon2371.databinding.LayoutSimplespinnerviewBinding
     private lateinit var mPopup: ListPopupWindow
-    private lateinit var mAdapter: CustomSpinnerAdapter
-    private var mList = mutableListOf<Any>()
+    private lateinit var mAdapter: ListAdapter
     private var mOnItemClickTask: (position: Int) -> Unit = {}
 
     // attrs
@@ -102,41 +103,24 @@ class SimpleSpinnerView : LinearLayout {
     private fun setListeners() {
         mBinding.linearlayoutCustomspinnerContainer.setOnClickListener {
             if (!mIsDisabled) {
-                if (mPopup.isShowing) dismiss()
-                else show()
+                if (mPopup.isShowing) collapse()
+                else expand()
             }
         }
 
         mPopup.setOnItemClickListener { parent, view, position, id ->
-            if (mList.size > position) {
-                val item: Any = mList[position]
-                if (item is String) mBinding.textviewCustomspinnerPlaceholder.text = item
-                mOnItemClickTask(position)
+            if (mAdapter.count > position) {
+                val item = mAdapter.getItem(position)
+                mBinding.textviewCustomspinnerPlaceholder.text = item.toString()
             }
-            dismiss()
+
+            mOnItemClickTask(position)
+            collapse()
         }
 
         mPopup.setOnDismissListener {
             mBinding.imageviewCustomspinnerArrow.animate().rotation(0f).start()
         }
-    }
-
-    fun setItems(list: MutableList<Any>) {
-        this.mList = list
-        if (list.isNotEmpty() && list[0] is String) {
-            mAdapter = CustomSpinnerAdapter(list = list as MutableList<String>)
-            mPopup.setAdapter(mAdapter)
-            setListHeight(list.size)
-        }
-    }
-
-    fun setAdapter(adapter: BaseAdapter) {
-        if (adapter.count > 0)
-            for (i in 0 until adapter.count)
-                mList.add(adapter.getItem(i))
-
-        mPopup.setAdapter(adapter)
-        setListHeight(mList.size)
     }
 
     private fun setListHeight(itemCount: Int) {
@@ -150,6 +134,18 @@ class SimpleSpinnerView : LinearLayout {
         }
     }
 
+    fun <T> setItems(list: MutableList<T>) {
+        mAdapter = CustomSpinnerListAdapter(list)
+        mPopup.setAdapter(mAdapter)
+        setListHeight(list.size)
+    }
+
+    fun setAdapter(adapter: ListAdapter) {
+        mAdapter = adapter
+        mPopup.setAdapter(adapter)
+        setListHeight(adapter.count)
+    }
+
     fun setOnItemClickTask(task: (position: Int) -> Unit) {
         this.mOnItemClickTask = task
     }
@@ -159,14 +155,14 @@ class SimpleSpinnerView : LinearLayout {
         mBinding.textviewCustomspinnerPlaceholder.text = mPlaceHolder
     }
 
-    private fun show() {
+    fun expand() {
         mBinding.imageviewCustomspinnerArrow.animate().rotation(180f).start()
         mPopup.show()
         mPopup.listView?.overScrollMode = View.OVER_SCROLL_NEVER
         mPopup.listView?.isVerticalScrollBarEnabled = false
     }
 
-    private fun dismiss() {
+    fun collapse() {
         mBinding.imageviewCustomspinnerArrow.animate().rotation(0f).start()
         mPopup.dismiss()
     }
@@ -174,22 +170,30 @@ class SimpleSpinnerView : LinearLayout {
     private fun convertDpToPx(dp: Int) =
         (dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)).toInt()
 
-    inner class CustomSpinnerAdapter(val list: MutableList<String>) : BaseAdapter() {
+    inner class CustomSpinnerListAdapter<T>(val list: MutableList<T>) : BaseAdapter() {
         private lateinit var mBinding: com.github.hyeyeon2371.databinding.ItemSimplespinnerviewBinding
 
         @SuppressLint("ViewHolder")
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
             mBinding =
                 DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.item_simplespinnerview, parent, false)
-            mBinding.textviewCustomspinnerList.text = list[position]
+            mBinding.textviewCustomspinnerList.text = list[position].toString()
             mBinding.textviewCustomspinnerList.setTextColor(mItemTextColor)
             mBinding.textviewCustomspinnerList.setTextSize(TypedValue.COMPLEX_UNIT_PX, mItemTextSize)
             return mBinding.root
         }
 
-        override fun getItem(position: Int): Any = list[position]
+        override fun getItem(position: Int): Any = list[position].toString()
         override fun getItemId(position: Int): Long = 0
         override fun getCount(): Int = list.size
+        override fun isEnabled(p0: Int): Boolean = list.isNotEmpty()
+        override fun areAllItemsEnabled(): Boolean = !list.isNullOrEmpty()
+        override fun hasStableIds(): Boolean = false
+        override fun unregisterDataSetObserver(p0: DataSetObserver?) {}
+        override fun getViewTypeCount(): Int = 1
+        override fun getItemViewType(p0: Int): Int = 1
+        override fun registerDataSetObserver(p0: DataSetObserver?) {}
+        override fun isEmpty(): Boolean = list.isEmpty()
     }
 
 }
