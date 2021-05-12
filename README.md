@@ -43,7 +43,7 @@ dependencies {
 
 3. Configure event listener
 ``` kotlin
-val list = mutableListOf("1","2", .. ,"7","8","9")
+val list : MutableList<Any> = mutableListOf("1","2", .. ,"7","8","9")
 mSimpleSpinnerView.setItems(list)
 mSimpleSpinnerView.setOnItemClickTask { position -> /* event */ }
 
